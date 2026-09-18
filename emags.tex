@@ -1,0 +1,3207 @@
+```latex
+\documentclass[11pt]{article}
+
+% ------------------------------------------------------------
+% Packages
+% ------------------------------------------------------------
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+% ------------------------------------------------------------
+% Custom commands
+% ------------------------------------------------------------
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\uvect}[1]{\hat{\mathbf{#1}}}
+
+% ------------------------------------------------------------
+% Document
+% ------------------------------------------------------------
+\begin{document}
+
+% ============================================================
+% TITLE
+% ============================================================
+
+\begin{titlepage}
+    \centering
+
+    \vspace*{2cm}
+
+    {\Huge\bfseries Electromagnetics Foundations\par}
+
+    \vspace{0.5cm}
+
+    {\Large A Beginner-Friendly Study Guide\par}
+
+    \vspace{1.5cm}
+
+    {\large
+    Vector Calculus, Electric Fields, Maxwell's Equations,\\
+    Electromagnetic Waves, Fourier Analysis, and SDR Connections
+    \par}
+
+    \vfill
+
+    {\large
+    \textbf{Purpose:}\\
+    Build the mathematical and physical foundation needed\\
+    to understand graduate-level electromagnetics.
+    \par}
+
+    \vspace{1cm}
+
+    {\large
+    \textbf{Boxed equations = equations worth memorizing}
+    \par}
+
+    \vfill
+
+    {\large
+    \today
+    \par}
+
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+
+% ============================================================
+% 1. BIG PICTURE
+% ============================================================
+
+\section{The Big Picture}
+
+Electromagnetics is fundamentally about understanding how
+\textbf{electric fields} and \textbf{magnetic fields} are produced,
+how they interact with matter, and how they propagate through space.
+
+A useful mental hierarchy is:
+
+\begin{enumerate}
+    \item Scalars and vectors
+    \item Vector calculus
+    \item Electric charge and current
+    \item Electric and magnetic fields
+    \item Constitutive relations
+    \item Maxwell's equations
+    \item Electromagnetic waves
+    \item Fourier analysis and frequency-domain thinking
+\end{enumerate}
+
+The most important conceptual chain is:
+
+\[
+\boxed{
+\text{Charge/current}
+\rightarrow
+\text{fields}
+\rightarrow
+\text{Maxwell's equations}
+\rightarrow
+\text{waves}
+\rightarrow
+\text{energy/information propagation}
+}
+\]
+
+For SDR work, Fourier analysis provides another important chain:
+
+\[
+\boxed{
+\text{Time-domain signal}
+\rightarrow
+\text{Fourier transform}
+\rightarrow
+\text{frequency-domain representation}
+\rightarrow
+\text{filtering/modulation/demodulation}
+}
+\]
+
+
+% ============================================================
+% 2. SCALARS AND VECTORS
+% ============================================================
+
+\section{Scalars and Vectors}
+
+A \textbf{scalar} has only magnitude.
+
+Examples:
+
+\begin{itemize}
+    \item Temperature
+    \item Voltage
+    \item Electric charge
+    \item Frequency
+    \item Permittivity
+\end{itemize}
+
+A \textbf{vector} has both magnitude and direction.
+
+Examples:
+
+\begin{itemize}
+    \item Electric field $\vect{E}$
+    \item Magnetic field $\vect{H}$
+    \item Current density $\vect{J}$
+    \item Force $\vect{F}$
+    \item Position $\vect{r}$
+\end{itemize}
+
+A three-dimensional vector can be written as
+
+\[
+\boxed{
+\vect{A}
+=
+A_x\uvect{x}
++
+A_y\uvect{y}
++
+A_z\uvect{z}
+}
+\]
+
+where:
+
+\begin{itemize}
+    \item $\vect{A}$ = vector
+    \item $A_x,A_y,A_z$ = components of the vector
+    \item $\uvect{x},\uvect{y},\uvect{z}$ = unit vectors in the $x$, $y$, and $z$ directions
+\end{itemize}
+
+
+% ============================================================
+% 3. UNIT VECTORS
+% ============================================================
+
+\section{Unit Vectors}
+
+A unit vector has magnitude 1.
+
+The unit vector pointing in the direction of $\vect{A}$ is
+
+\[
+\boxed{
+\hat{\vect{A}}
+=
+\frac{\vect{A}}{|\vect{A}|}
+}
+\]
+
+The hat indicates that the vector has been normalized.
+
+For example,
+
+\[
+\uvect{x}
+\]
+
+means ``the unit vector pointing in the $x$ direction.''
+
+
+% ============================================================
+% 4. VECTOR MAGNITUDE
+% ============================================================
+
+\section{Vector Magnitude}
+
+The magnitude is the length of a vector.
+
+For
+
+\[
+\vect{A}
+=
+A_x\uvect{x}
++
+A_y\uvect{y}
++
+A_z\uvect{z},
+\]
+
+the magnitude is
+
+\[
+\boxed{
+|\vect{A}|
+=
+\sqrt{
+A_x^2+A_y^2+A_z^2
+}
+}
+\]
+
+This is just the three-dimensional version of the Pythagorean theorem.
+
+
+% ============================================================
+% 5. DOT PRODUCT
+% ============================================================
+
+\section{Dot Product}
+
+The dot product takes two vectors and produces a scalar.
+
+\[
+\boxed{
+\vect{A}\cdot\vect{B}
+=
+|\vect{A}||\vect{B}|\cos\theta
+}
+\]
+
+where $\theta$ is the angle between the vectors.
+
+The dot product tells you how much one vector points in the direction of another.
+
+Important cases:
+
+\[
+\vect{A}\cdot\vect{B}>0
+\]
+
+means the vectors generally point in similar directions.
+
+\[
+\vect{A}\cdot\vect{B}=0
+\]
+
+means the vectors are perpendicular.
+
+\[
+\vect{A}\cdot\vect{B}<0
+\]
+
+means they generally point in opposite directions.
+
+The component form is
+
+\[
+\vect{A}\cdot\vect{B}
+=
+A_xB_x+A_yB_y+A_zB_z.
+\]
+
+
+% ============================================================
+% 6. CROSS PRODUCT
+% ============================================================
+
+\section{Cross Product}
+
+The cross product takes two vectors and produces another vector.
+
+\[
+\boxed{
+\vect{A}\times\vect{B}
+=
+|\vect{A}||\vect{B}|
+\sin\theta\,
+\hat{\vect{n}}
+}
+\]
+
+where:
+
+\begin{itemize}
+    \item $\theta$ = angle between the vectors
+    \item $\hat{\vect{n}}$ = unit vector perpendicular to both
+\end{itemize}
+
+The cross product is zero when the vectors are parallel.
+
+It is largest when the vectors are perpendicular.
+
+Direction is determined using the right-hand rule.
+
+
+% ============================================================
+% 7. SCALAR AND VECTOR FIELDS
+% ============================================================
+
+\section{Scalar Fields and Vector Fields}
+
+A \textbf{scalar field} assigns a scalar value to every point in space.
+
+Example:
+
+\[
+V(x,y,z)
+\]
+
+is a voltage field.
+
+A \textbf{vector field} assigns a vector to every point in space.
+
+Example:
+
+\[
+\vect{E}(x,y,z)
+\]
+
+is an electric-field vector field.
+
+This distinction is extremely important because vector calculus operators behave differently depending on whether their input is a scalar or vector.
+
+
+% ============================================================
+% 8. PARTIAL DERIVATIVES
+% ============================================================
+
+\section{Partial Derivatives}
+
+A partial derivative tells you how a function changes with respect to one variable while treating the others as constant.
+
+For
+
+\[
+V(x,y,z),
+\]
+
+we can calculate
+
+\[
+\frac{\partial V}{\partial x},
+\qquad
+\frac{\partial V}{\partial y},
+\qquad
+\frac{\partial V}{\partial z}.
+\]
+
+For example,
+
+\[
+V(x,y)=x^2+3y,
+\]
+
+gives
+
+\[
+\frac{\partial V}{\partial x}=2x
+\]
+
+and
+
+\[
+\frac{\partial V}{\partial y}=3.
+\]
+
+
+% ============================================================
+% 9. NABLA
+% ============================================================
+
+\section{The Nabla Operator}
+
+The symbol
+
+\[
+\nabla
+\]
+
+is called \textbf{nabla} or \textbf{del}.
+
+In Cartesian coordinates,
+
+\[
+\boxed{
+\nabla
+=
+\uvect{x}\frac{\partial}{\partial x}
++
+\uvect{y}\frac{\partial}{\partial y}
++
+\uvect{z}\frac{\partial}{\partial z}
+}
+\]
+
+Think of $\nabla$ as a mathematical operator that performs spatial derivatives.
+
+It can be combined with fields in several important ways:
+
+\[
+\nabla V
+\]
+
+gradient,
+
+\[
+\nabla\cdot\vect{A}
+\]
+
+divergence,
+
+and
+
+\[
+\nabla\times\vect{A}
+\]
+
+curl.
+
+
+% ============================================================
+% 10. GRADIENT
+% ============================================================
+
+\section{Gradient}
+
+The gradient takes a scalar field and produces a vector.
+
+\[
+\boxed{
+\nabla V
+=
+\frac{\partial V}{\partial x}\uvect{x}
++
+\frac{\partial V}{\partial y}\uvect{y}
++
+\frac{\partial V}{\partial z}\uvect{z}
+}
+\]
+
+The gradient points in the direction where the scalar field increases most rapidly.
+
+For voltage,
+
+\[
+\boxed{
+\vect{E}=-\nabla V
+}
+\]
+
+This means the electric field points toward decreasing electric potential.
+
+
+% ============================================================
+% 11. DIVERGENCE
+% ============================================================
+
+\section{Divergence}
+
+Divergence measures how much a vector field is ``spreading out'' from a point.
+
+For
+
+\[
+\vect{A}
+=
+A_x\uvect{x}
++
+A_y\uvect{y}
++
+A_z\uvect{z},
+\]
+
+the divergence is
+
+\[
+\boxed{
+\nabla\cdot\vect{A}
+=
+\frac{\partial A_x}{\partial x}
++
+\frac{\partial A_y}{\partial y}
++
+\frac{\partial A_z}{\partial z}
+}
+\]
+
+The result is a scalar.
+
+Intuitively:
+
+\begin{itemize}
+    \item Positive divergence $\rightarrow$ source
+    \item Negative divergence $\rightarrow$ sink
+    \item Zero divergence $\rightarrow$ no net source/sink
+\end{itemize}
+
+
+% ============================================================
+% 12. CURL
+% ============================================================
+
+\section{Curl}
+
+Curl measures local rotation or circulation of a vector field.
+
+\[
+\boxed{
+\nabla\times\vect{A}
+}
+\]
+
+For
+
+\[
+\vect{A}
+=
+A_x\uvect{x}
++
+A_y\uvect{y}
++
+A_z\uvect{z},
+\]
+
+the expanded expression is
+
+\[
+\nabla\times\vect{A}
+=
+\begin{vmatrix}
+\uvect{x} & \uvect{y} & \uvect{z}\\
+\frac{\partial}{\partial x}
+&
+\frac{\partial}{\partial y}
+&
+\frac{\partial}{\partial z}
+\\
+A_x&A_y&A_z
+\end{vmatrix}.
+\]
+
+Therefore,
+
+\[
+\nabla\times\vect{A}
+=
+\left(
+\frac{\partial A_z}{\partial y}
+-
+\frac{\partial A_y}{\partial z}
+\right)\uvect{x}
++
+\left(
+\frac{\partial A_x}{\partial z}
+-
+\frac{\partial A_z}{\partial x}
+\right)\uvect{y}
++
+\left(
+\frac{\partial A_y}{\partial x}
+-
+\frac{\partial A_x}{\partial y}
+\right)\uvect{z}.
+\]
+
+
+% ============================================================
+% 13. LAPLACIAN
+% ============================================================
+
+\section{Laplacian}
+
+The Laplacian of a scalar field is
+
+\[
+\boxed{
+\nabla^2V
+=
+\nabla\cdot(\nabla V)
+}
+\]
+
+In Cartesian coordinates,
+
+\[
+\boxed{
+\nabla^2V
+=
+\frac{\partial^2V}{\partial x^2}
++
+\frac{\partial^2V}{\partial y^2}
++
+\frac{\partial^2V}{\partial z^2}
+}
+\]
+
+The Laplacian tells you how a quantity compares to its surrounding values.
+
+It appears constantly in electromagnetics, especially in electrostatics and wave equations.
+
+
+% ============================================================
+% 14. INTEGRALS
+% ============================================================
+
+\section{Integrals}
+
+An integral is essentially accumulation.
+
+A one-dimensional integral,
+
+\[
+\int_a^b f(x)\,dx,
+\]
+
+adds up infinitely many small contributions.
+
+In three-dimensional electromagnetics, you will encounter:
+
+\[
+\iiint_V
+\]
+
+for volume integrals,
+
+\[
+\iint_S
+\]
+
+for surface integrals,
+
+and
+
+\[
+\oint_C
+\]
+
+for closed line integrals.
+
+The subscript tells you what geometric object you are integrating over.
+
+
+% ============================================================
+% 15. DIFFERENTIAL DISPLACEMENT
+% ============================================================
+
+\section{Differential Displacement}
+
+The differential displacement vector represents a tiny movement through space.
+
+\[
+\boxed{
+d\vect{l}
+=
+dx\,\uvect{x}
++
+dy\,\uvect{y}
++
+dz\,\uvect{z}
+}
+\]
+
+where:
+
+\begin{itemize}
+    \item $dx$ = tiny displacement in $x$
+    \item $dy$ = tiny displacement in $y$
+    \item $dz$ = tiny displacement in $z$
+\end{itemize}
+
+
+% ============================================================
+% 16. DIFFERENTIAL SURFACE AREA
+% ============================================================
+
+\section{Differential Surface Area}
+
+A small surface element is represented by
+
+\[
+\boxed{
+d\vect{S}
+=
+\hat{\vect{n}}\,dS
+}
+\]
+
+where:
+
+\begin{itemize}
+    \item $dS$ = tiny area
+    \item $\hat{\vect{n}}$ = unit vector perpendicular to the surface
+    \item $d\vect{S}$ = vector area element
+\end{itemize}
+
+
+% ============================================================
+% 17. CLOSED INTEGRALS
+% ============================================================
+
+\section{Closed Integrals}
+
+A circle over an integral sign means the path or surface is closed.
+
+For example,
+
+\[
+\oint_C
+\]
+
+means a closed line integral around contour $C$.
+
+Similarly,
+
+\[
+\oiint_S
+\]
+
+means a closed surface integral.
+
+This notation becomes extremely important in Maxwell's equations.
+
+
+% ============================================================
+% 18. FLUX
+% ============================================================
+
+\section{Flux}
+
+Flux describes how much of a vector field passes through a surface.
+
+For a uniform field,
+
+\[
+\boxed{
+\Phi
+=
+EA\cos\theta
+}
+\]
+
+where:
+
+\begin{itemize}
+    \item $\Phi$ = flux
+    \item $E$ = magnitude of the field
+    \item $A$ = surface area
+    \item $\theta$ = angle between the field and surface normal
+\end{itemize}
+
+The general electric-flux expression is
+
+\[
+\boxed{
+\Phi_E
+=
+\int_S
+\vect{E}\cdot d\vect{S}
+}
+\]
+
+The dot product is important because only the component of $\vect{E}$ perpendicular to the surface contributes to flux.
+
+
+% ============================================================
+% 19. CHARGE
+% ============================================================
+
+\section{Charge}
+
+Electric charge is measured in coulombs.
+
+The total charge contained inside a volume is
+
+\[
+\boxed{
+Q
+=
+\int_V\rho\,dv
+}
+\]
+
+where:
+
+\begin{itemize}
+    \item $Q$ = total charge
+    \item $\rho$ = volume charge density
+    \item $dv$ = differential volume
+\end{itemize}
+
+
+% ============================================================
+% 20. CHARGE DENSITY
+% ============================================================
+
+\section{Charge Density}
+
+Charge can be distributed through a volume, across a surface, or along a line.
+
+Volume charge density:
+
+\[
+\boxed{
+\rho
+=
+\frac{dQ}{dv}
+}
+\]
+
+Surface charge density:
+
+\[
+\boxed{
+\rho_s
+=
+\frac{dQ}{dS}
+}
+\]
+
+Line charge density:
+
+\[
+\boxed{
+\rho_l
+=
+\frac{dQ}{dl}
+}
+\]
+
+Units are:
+
+\[
+[\rho]=\mathrm{C/m^3}
+\]
+
+\[
+[\rho_s]=\mathrm{C/m^2}
+\]
+
+\[
+[\rho_l]=\mathrm{C/m}.
+\]
+
+
+% ============================================================
+% 21. ELECTRIC POTENTIAL
+% ============================================================
+
+\section{Electric Potential}
+
+Electric potential, or voltage, is measured in volts.
+
+It represents electrical potential energy per unit charge.
+
+The electric field and voltage are related by
+
+\[
+\boxed{
+\vect{E}
+=
+-\nabla V
+}
+\]
+
+The negative sign means that the electric field points toward decreasing voltage.
+
+For a one-dimensional situation,
+
+\[
+E_x=-\frac{dV}{dx}.
+\]
+
+
+% ============================================================
+% 22. ELECTRIC FIELD
+% ============================================================
+
+\section{Electric Field}
+
+The electric field is force per unit charge.
+
+\[
+\boxed{
+\vect{E}
+=
+\frac{\vect{F}}{q}
+}
+\]
+
+where:
+
+\begin{itemize}
+    \item $\vect{E}$ = electric field
+    \item $\vect{F}$ = electric force
+    \item $q$ = charge
+\end{itemize}
+
+The units are
+
+\[
+\mathrm{N/C}
+\]
+
+or equivalently
+
+\[
+\mathrm{V/m}.
+\]
+
+
+% ============================================================
+% 23. PERMITTIVITY
+% ============================================================
+
+\section{Permittivity}
+
+Permittivity describes how a material responds to an electric field.
+
+The symbol is
+
+\[
+\epsilon.
+\]
+
+The constitutive relation is
+
+\[
+\boxed{
+\vect{D}
+=
+\epsilon\vect{E}
+}
+\]
+
+where:
+
+\begin{itemize}
+    \item $\vect{D}$ = electric flux density
+    \item $\epsilon$ = permittivity
+    \item $\vect{E}$ = electric field
+\end{itemize}
+
+Permittivity is often written as
+
+\[
+\boxed{
+\epsilon
+=
+\epsilon_r\epsilon_0
+}
+\]
+
+where:
+
+\begin{itemize}
+    \item $\epsilon_r$ = relative permittivity
+    \item $\epsilon_0$ = permittivity of free space
+\end{itemize}
+
+A material with larger $\epsilon$ generally stores more electric energy for a given electric field.
+
+
+% ============================================================
+% 24. DIELECTRICS
+% ============================================================
+
+\section{Dielectrics}
+
+A dielectric is an electrically insulating material that can become polarized when exposed to an electric field.
+
+Examples include:
+
+\begin{itemize}
+    \item Glass
+    \item Ceramic
+    \item Plastic
+    \item Air
+\end{itemize}
+
+The relative permittivity is
+
+\[
+\epsilon_r
+=
+\frac{\epsilon}{\epsilon_0}.
+\]
+
+If
+
+\[
+\epsilon_r>1,
+\]
+
+the material has greater permittivity than free space.
+
+
+% ============================================================
+% 25. ELECTRIC FLUX DENSITY
+% ============================================================
+
+\section{Electric Flux Density}
+
+Electric flux density is represented by
+
+\[
+\vect{D}.
+\]
+
+For a linear isotropic material,
+
+\[
+\boxed{
+\vect{D}
+=
+\epsilon\vect{E}
+}
+\]
+
+The units of $\vect{D}$ are
+
+\[
+\mathrm{C/m^2}.
+\]
+
+Do not confuse $\vect{D}$ with $\vect{E}$:
+
+\[
+\vect{E}
+=
+\text{electric field}
+\]
+
+while
+
+\[
+\vect{D}
+=
+\text{electric flux density}.
+\]
+
+
+% ============================================================
+% 26. MAGNETIC FIELDS
+% ============================================================
+
+\section{Magnetic Flux Density and Magnetic Field Intensity}
+
+There are two commonly used magnetic-field quantities:
+
+\[
+\vect{B}
+\]
+
+and
+
+\[
+\vect{H}.
+\]
+
+They are related through
+
+\[
+\boxed{
+\vect{B}
+=
+\mu\vect{H}
+}
+\]
+
+where:
+
+\begin{itemize}
+    \item $\vect{B}$ = magnetic flux density
+    \item $\vect{H}$ = magnetic field intensity
+    \item $\mu$ = permeability
+\end{itemize}
+
+Similarly,
+
+\[
+\boxed{
+\mu
+=
+\mu_r\mu_0
+}
+\]
+
+where:
+
+\begin{itemize}
+    \item $\mu_r$ = relative permeability
+    \item $\mu_0$ = permeability of free space
+\end{itemize}
+
+
+% ============================================================
+% 27. CURRENT DENSITY
+% ============================================================
+
+\section{Current Density}
+
+Current density describes how electric current is distributed through an area.
+
+It is represented by
+
+\[
+\vect{J}.
+\]
+
+For a simple ohmic material,
+
+\[
+\boxed{
+\vect{J}
+=
+\sigma\vect{E}
+}
+\]
+
+where:
+
+\begin{itemize}
+    \item $\vect{J}$ = current density
+    \item $\sigma$ = electrical conductivity
+    \item $\vect{E}$ = electric field
+\end{itemize}
+
+The units of $\vect{J}$ are
+
+\[
+\mathrm{A/m^2}.
+\]
+
+
+% ============================================================
+% 28. CONSTITUTIVE RELATIONS
+% ============================================================
+
+\section{The Three Constitutive Relations}
+
+For simple linear isotropic materials, remember:
+
+\[
+\boxed{
+\vect{D}
+=
+\epsilon\vect{E}
+}
+\]
+
+\[
+\boxed{
+\vect{B}
+=
+\mu\vect{H}
+}
+\]
+
+\[
+\boxed{
+\vect{J}
+=
+\sigma\vect{E}
+}
+\]
+
+These describe how a material responds to electric and magnetic fields.
+
+
+% ============================================================
+% 29. MAXWELL
+% ============================================================
+
+\section{Maxwell's Four Equations}
+
+These are the central equations of classical electromagnetics.
+
+\subsection{Gauss's Law for Electricity}
+
+\[
+\boxed{
+\nabla\cdot\vect{D}
+=
+\rho
+}
+\]
+
+Electric charge acts as a source or sink of electric flux.
+
+\subsection{Gauss's Law for Magnetism}
+
+\[
+\boxed{
+\nabla\cdot\vect{B}
+=
+0
+}
+\]
+
+There are no isolated magnetic monopoles in classical electromagnetics.
+
+\subsection{Faraday's Law}
+
+\[
+\boxed{
+\nabla\times\vect{E}
+=
+-\frac{\partial\vect{B}}{\partial t}
+}
+\]
+
+A changing magnetic field produces a circulating electric field.
+
+\subsection{Ampere-Maxwell Law}
+
+\[
+\boxed{
+\nabla\times\vect{H}
+=
+\vect{J}
++
+\frac{\partial\vect{D}}{\partial t}
+}
+\]
+
+Electric current and changing electric fields produce circulating magnetic fields.
+
+
+% ============================================================
+% 30. PHYSICAL PICTURE
+% ============================================================
+
+\section{Maxwell's Equations: Physical Picture}
+
+A useful memorization table is:
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Equation & Mathematical operation & Physical idea \\
+\midrule
+$\nabla\cdot\vect{D}=\rho$
+& Divergence
+& Charge creates electric flux \\
+
+$\nabla\cdot\vect{B}=0$
+& Divergence
+& No magnetic monopoles \\
+
+$\nabla\times\vect{E}=-\partial\vect{B}/\partial t$
+& Curl
+& Changing magnetic field creates electric field \\
+
+$\nabla\times\vect{H}=\vect{J}+\partial\vect{D}/\partial t$
+& Curl
+& Current/changing electric field creates magnetic field \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The deepest idea is that changing electric and magnetic fields can sustain each other and propagate through space.
+
+
+% ============================================================
+% 31. POISSON
+% ============================================================
+
+\section{Poisson's Equation}
+
+Start with
+
+\[
+\vect{E}=-\nabla V.
+\]
+
+Using
+
+\[
+\vect{D}=\epsilon\vect{E},
+\]
+
+we get
+
+\[
+\vect{D}
+=
+-\epsilon\nabla V.
+\]
+
+Gauss's law says
+
+\[
+\nabla\cdot\vect{D}
+=
+\rho.
+\]
+
+Therefore,
+
+\[
+\nabla\cdot(-\epsilon\nabla V)
+=
+\rho.
+\]
+
+For constant $\epsilon$,
+
+\[
+-\epsilon\nabla^2V
+=
+\rho.
+\]
+
+Therefore,
+
+\[
+\boxed{
+\nabla^2V
+=
+-\frac{\rho}{\epsilon}
+}
+\]
+
+This is \textbf{Poisson's equation}.
+
+It tells you how charge density determines the curvature of voltage.
+
+
+% ============================================================
+% 32. LAPLACE
+% ============================================================
+
+\section{Laplace's Equation}
+
+If there is no charge,
+
+\[
+\rho=0.
+\]
+
+Poisson's equation becomes
+
+\[
+\boxed{
+\nabla^2V=0
+}
+\]
+
+This is \textbf{Laplace's equation}.
+
+A huge amount of electrostatics involves solving Laplace's equation subject to boundary conditions.
+
+
+% ============================================================
+% 33. BOUNDARY CONDITIONS
+% ============================================================
+
+\section{Boundary Conditions}
+
+When an electromagnetic field crosses a boundary between two materials, the field components must satisfy specific conditions.
+
+For the normal component of $\vect{D}$,
+
+\[
+\boxed{
+\hat{\vect{n}}
+\cdot
+(\vect{D}_2-\vect{D}_1)
+=
+\rho_s
+}
+\]
+
+where:
+
+\begin{itemize}
+    \item $\hat{\vect{n}}$ = unit normal pointing from region 1 to region 2
+    \item $\vect{D}_1$ = electric flux density on side 1
+    \item $\vect{D}_2$ = electric flux density on side 2
+    \item $\rho_s$ = surface charge density
+\end{itemize}
+
+For the tangential electric field,
+
+\[
+\boxed{
+\hat{\vect{n}}
+\times
+(\vect{E}_2-\vect{E}_1)
+=
+0
+}
+\]
+
+This says the tangential component of $\vect{E}$ is continuous across an ordinary static boundary.
+
+
+% ============================================================
+% 34. ELECTROMAGNETIC WAVES
+% ============================================================
+
+\section{Electromagnetic Waves}
+
+A simple plane electromagnetic wave can be represented as
+
+\[
+\boxed{
+\vect{E}
+=
+\uvect{x}
+E_0
+\cos(\omega t-kz)
+}
+\]
+
+where:
+
+\begin{itemize}
+    \item $E_0$ = electric-field amplitude
+    \item $\omega$ = angular frequency
+    \item $t$ = time
+    \item $k$ = wavenumber
+    \item $z$ = position
+\end{itemize}
+
+The argument
+
+\[
+\omega t-kz
+\]
+
+determines the phase of the wave.
+
+The electric field points in the $x$ direction while the wave propagates in the $+z$ direction.
+
+
+% ============================================================
+% 35. FREQUENCY
+% ============================================================
+
+\section{Frequency, Period, and Angular Frequency}
+
+Frequency is measured in hertz.
+
+\[
+\boxed{
+T=\frac{1}{f}
+}
+\]
+
+where:
+
+\begin{itemize}
+    \item $T$ = period in seconds
+    \item $f$ = frequency in hertz
+\end{itemize}
+
+Angular frequency is
+
+\[
+\boxed{
+\omega=2\pi f
+}
+\]
+
+where:
+
+\begin{itemize}
+    \item $\omega$ = angular frequency in radians/second
+    \item $f$ = frequency in hertz
+\end{itemize}
+
+
+% ============================================================
+% 36. WAVELENGTH
+% ============================================================
+
+\section{Wavelength and Wavenumber}
+
+Wavelength is the physical distance corresponding to one complete cycle.
+
+It is represented by
+
+\[
+\lambda.
+\]
+
+The wavenumber is
+
+\[
+\boxed{
+k=\frac{2\pi}{\lambda}
+}
+\]
+
+where:
+
+\begin{itemize}
+    \item $k$ = wavenumber in radians/meter
+    \item $\lambda$ = wavelength in meters
+\end{itemize}
+
+The factor $2\pi$ appears because one complete cycle corresponds to $2\pi$ radians.
+
+
+% ============================================================
+% 37. WAVE VELOCITY
+% ============================================================
+
+\section{Wave Velocity}
+
+Wave velocity is related to frequency and wavelength by
+
+\[
+\boxed{
+v=f\lambda
+}
+\]
+
+Since
+
+\[
+\omega=2\pi f
+\]
+
+and
+
+\[
+k=\frac{2\pi}{\lambda},
+\]
+
+we can also write
+
+\[
+\boxed{
+v=\frac{\omega}{k}
+}
+\]
+
+The key relationships are
+
+\[
+\boxed{
+T=\frac{1}{f},
+\qquad
+\omega=2\pi f,
+\qquad
+k=\frac{2\pi}{\lambda},
+\qquad
+v=f\lambda,
+\qquad
+v=\frac{\omega}{k}
+}
+\]
+
+
+% ============================================================
+% 38. EM WAVE VELOCITY
+% ============================================================
+
+\section{Electromagnetic Wave Velocity}
+
+In a homogeneous medium,
+
+\[
+\boxed{
+v
+=
+\frac{1}{\sqrt{\mu\epsilon}}
+}
+\]
+
+where:
+
+\begin{itemize}
+    \item $v$ = electromagnetic wave velocity
+    \item $\mu$ = permeability
+    \item $\epsilon$ = permittivity
+\end{itemize}
+
+In free space,
+
+\[
+\boxed{
+c
+=
+\frac{1}{\sqrt{\mu_0\epsilon_0}}
+}
+\]
+
+where $c$ is the speed of light.
+
+
+% ============================================================
+% 39. INTRINSIC IMPEDANCE
+% ============================================================
+
+\section{Intrinsic Impedance}
+
+The ratio of electric-field magnitude to magnetic-field magnitude in a uniform plane wave is the intrinsic impedance.
+
+\[
+\boxed{
+\eta
+=
+\sqrt{\frac{\mu}{\epsilon}}
+}
+\]
+
+and
+
+\[
+\boxed{
+\frac{E}{H}
+=
+\eta
+}
+\]
+
+For free space,
+
+\[
+\boxed{
+\eta_0
+\approx
+377~\Omega
+}
+\]
+
+This is analogous to an impedance relationship between voltage and current, but here it describes the ratio between electric and magnetic field strengths.
+
+
+% ============================================================
+% 40. POYNTING VECTOR
+% ============================================================
+
+\section{Poynting Vector}
+
+The Poynting vector describes electromagnetic power flow.
+
+\[
+\boxed{
+\vect{S}
+=
+\vect{E}\times\vect{H}
+}
+\]
+
+where:
+
+\begin{itemize}
+    \item $\vect{S}$ = power density
+    \item $\vect{E}$ = electric field
+    \item $\vect{H}$ = magnetic field
+\end{itemize}
+
+The units are
+
+\[
+\mathrm{W/m^2}.
+\]
+
+The direction of $\vect{S}$ tells you the direction in which electromagnetic energy is flowing.
+
+
+% ============================================================
+% 41. COMPLEX NUMBERS
+% ============================================================
+
+\section{Complex Numbers}
+
+Electrical engineering frequently uses complex numbers.
+
+The imaginary unit is
+
+\[
+\boxed{
+j=\sqrt{-1}
+}
+\]
+
+Electrical engineers use $j$ instead of $i$ because $i$ commonly represents current.
+
+Euler's formula is
+
+\[
+\boxed{
+e^{j\theta}
+=
+\cos\theta
++
+j\sin\theta
+}
+\]
+
+This is extremely important because it connects exponentials with sinusoidal signals.
+
+
+% ============================================================
+% 42. PHASORS
+% ============================================================
+
+\section{Phasors}
+
+Suppose a sinusoidal signal is
+
+\[
+E(t)
+=
+E_0\cos(\omega t+\phi).
+\]
+
+We can represent its amplitude and phase using a complex phasor:
+
+\[
+\boxed{
+\tilde{E}
+=
+E_0e^{j\phi}
+}
+\]
+
+The physical signal is recovered by taking the real part:
+
+\[
+E(t)
+=
+\operatorname{Re}
+\left\{
+\tilde{E}e^{j\omega t}
+\right\}.
+\]
+
+One of the major benefits of phasors is that differentiation with respect to time becomes multiplication by $j\omega$:
+
+\[
+\boxed{
+\frac{\partial}{\partial t}
+\longrightarrow
+j\omega
+}
+\]
+
+Therefore,
+
+\[
+\boxed{
+\frac{\partial E}{\partial t}
+\longrightarrow
+j\omega\tilde{E}
+}
+\]
+
+This makes many electromagnetic equations much easier to solve in the frequency domain.
+
+
+% ============================================================
+% 43. FOURIER TRANSFORM
+% ============================================================
+
+\section{Fourier Transform}
+
+The Fourier transform converts a time-domain signal into its frequency-domain representation.
+
+\[
+\boxed{
+X(f)
+=
+\int_{-\infty}^{\infty}
+x(t)e^{-j2\pi ft}\,dt
+}
+\]
+
+where:
+
+\begin{itemize}
+    \item $x(t)$ = time-domain signal
+    \item $X(f)$ = frequency-domain representation
+    \item $f$ = frequency
+    \item $t$ = time
+\end{itemize}
+
+The inverse transform is
+
+\[
+x(t)
+=
+\int_{-\infty}^{\infty}
+X(f)e^{j2\pi ft}\,df.
+\]
+
+The big idea is:
+
+\[
+\boxed{
+\text{time domain}
+\longleftrightarrow
+\text{frequency domain}
+}
+\]
+
+
+% ============================================================
+% 44. DFT VS FFT
+% ============================================================
+
+\section{DFT vs FFT}
+
+The Discrete Fourier Transform is
+
+\[
+\boxed{
+X[k]
+=
+\sum_{n=0}^{N-1}
+x[n]
+e^{-j2\pi kn/N}
+}
+\]
+
+where:
+
+\begin{itemize}
+    \item $x[n]$ = input samples
+    \item $X[k]$ = frequency-bin output
+    \item $N$ = number of samples
+    \item $n$ = time-domain sample index
+    \item $k$ = frequency-bin index
+\end{itemize}
+
+The DFT is the mathematical operation.
+
+The FFT is an efficient algorithm for computing the DFT.
+
+In simple terms:
+
+\[
+\boxed{
+\text{FFT}
+=
+\text{fast algorithm for computing the DFT}
+}
+\]
+
+For a naive DFT, computational complexity is approximately
+
+\[
+O(N^2).
+\]
+
+For a typical FFT algorithm,
+
+\[
+O(N\log N).
+\]
+
+This is why FFTs are so useful for SDR.
+
+
+% ============================================================
+% 45. SAMPLING
+% ============================================================
+
+\section{Sampling}
+
+When converting an analog signal into digital samples, the sampling rate must be sufficiently high to represent the signal without aliasing.
+
+The Nyquist condition is
+
+\[
+\boxed{
+f_s>2f_{\max}
+}
+\]
+
+where:
+
+\begin{itemize}
+    \item $f_s$ = sampling frequency
+    \item $f_{\max}$ = highest frequency component of the signal
+\end{itemize}
+
+If the condition is violated, frequency components can alias into other frequencies.
+
+In SDR, this is one of the fundamental reasons that sample rate and filtering matter.
+
+
+% ============================================================
+% 46. CONVOLUTION
+% ============================================================
+
+\section{Convolution}
+
+Convolution describes how a linear time-invariant system transforms an input signal.
+
+In the time domain,
+
+\[
+\boxed{
+y(t)
+=
+x(t)*h(t)
+}
+\]
+
+where:
+
+\begin{itemize}
+    \item $x(t)$ = input
+    \item $h(t)$ = impulse response
+    \item $y(t)$ = output
+\end{itemize}
+
+In the frequency domain, convolution becomes multiplication:
+
+\[
+\boxed{
+Y(f)
+=
+X(f)H(f)
+}
+\]
+
+This is one of the major reasons Fourier analysis is so useful for filters.
+
+For SDR:
+
+\[
+\boxed{
+\text{filtering in time}
+\longleftrightarrow
+\text{multiplication in frequency}
+}
+\]
+
+
+% ============================================================
+% 47. DIVERGENCE THEOREM
+% ============================================================
+
+\section{Divergence Theorem}
+
+The divergence theorem connects a volume integral to a closed surface integral.
+
+\[
+\boxed{
+\iiint_V
+\nabla\cdot\vect{A}\,dv
+=
+\oiint_S
+\vect{A}\cdot d\vect{S}
+}
+\]
+
+In words:
+
+\begin{quote}
+The total amount of divergence inside a volume equals the net outward flux through its enclosing surface.
+\end{quote}
+
+This theorem is essential for understanding the integral form of Gauss's law.
+
+
+% ============================================================
+% 48. STOKES' THEOREM
+% ============================================================
+
+\section{Stokes' Theorem}
+
+Stokes' theorem connects curl over a surface to circulation around the boundary.
+
+\[
+\boxed{
+\iint_S
+(\nabla\times\vect{A})
+\cdot d\vect{S}
+=
+\oint_C
+\vect{A}\cdot d\vect{l}
+}
+\]
+
+In words:
+
+\begin{quote}
+The total curl passing through a surface equals the circulation around the boundary of that surface.
+\end{quote}
+
+This theorem is essential for understanding the integral form of Faraday's law and Ampere's law.
+
+
+% ============================================================
+% 49. DIFFERENTIAL EQUATIONS
+% ============================================================
+
+\section{Differential Equations}
+
+A differential equation contains derivatives of an unknown function.
+
+For example,
+
+\[
+\frac{d^2y}{dx^2}+ky=0.
+\]
+
+A common solution is sinusoidal:
+
+\[
+y(x)
+=
+A\cos(kx)
++
+B\sin(kx).
+\]
+
+Electromagnetic fields are governed by differential equations because Maxwell's equations describe how fields vary across space and time.
+
+The wave equation is a particularly important example.
+
+
+% ============================================================
+% 50. SEPARATION OF VARIABLES
+% ============================================================
+
+\section{Separation of Variables}
+
+Separation of variables is a technique for solving certain partial differential equations.
+
+For example, assume
+
+\[
+\boxed{
+V(x,y)
+=
+X(x)Y(y)
+}
+\]
+
+where:
+
+\begin{itemize}
+    \item $V(x,y)$ = unknown two-dimensional function
+    \item $X(x)$ = function depending only on $x$
+    \item $Y(y)$ = function depending only on $y$
+\end{itemize}
+
+The goal is to turn one complicated PDE into multiple simpler ordinary differential equations.
+
+
+% ============================================================
+% 51. MASTER EQUATION SHEET
+% ============================================================
+
+\section{Master Equation Sheet}
+
+These are the equations to know especially well.
+
+\subsection*{Vectors}
+
+\[
+\boxed{
+|\vect{A}|
+=
+\sqrt{A_x^2+A_y^2+A_z^2}
+}
+\]
+
+\[
+\boxed{
+\hat{\vect{A}}
+=
+\frac{\vect{A}}{|\vect{A}|}
+}
+\]
+
+\[
+\boxed{
+\vect{A}\cdot\vect{B}
+=
+|\vect{A}||\vect{B}|\cos\theta
+}
+\]
+
+\[
+\boxed{
+\vect{A}\times\vect{B}
+=
+|\vect{A}||\vect{B}|\sin\theta\,\hat{\vect{n}}
+}
+\]
+
+\subsection*{Vector Calculus}
+
+\[
+\boxed{
+\nabla V
+=
+\frac{\partial V}{\partial x}\uvect{x}
++
+\frac{\partial V}{\partial y}\uvect{y}
++
+\frac{\partial V}{\partial z}\uvect{z}
+}
+\]
+
+\[
+\boxed{
+\nabla\cdot\vect{A}
+=
+\frac{\partial A_x}{\partial x}
++
+\frac{\partial A_y}{\partial y}
++
+\frac{\partial A_z}{\partial z}
+}
+\]
+
+\[
+\boxed{
+\nabla\times\vect{A}
+}
+\]
+
+\[
+\boxed{
+\nabla^2V
+=
+\nabla\cdot(\nabla V)
+}
+\]
+
+\subsection*{Electrostatics}
+
+\[
+\boxed{
+\vect{E}
+=
+-\nabla V
+}
+\]
+
+\[
+\boxed{
+\vect{D}
+=
+\epsilon\vect{E}
+}
+\]
+
+\[
+\boxed{
+Q
+=
+\int_V\rho\,dv
+}
+\]
+
+\[
+\boxed{
+\nabla^2V
+=
+-\frac{\rho}{\epsilon}
+}
+\]
+
+\[
+\boxed{
+\nabla^2V=0
+\qquad
+(\rho=0)
+}
+\]
+
+\subsection*{Magnetics}
+
+\[
+\boxed{
+\vect{B}
+=
+\mu\vect{H}
+}
+\]
+
+\[
+\boxed{
+\vect{J}
+=
+\sigma\vect{E}
+}
+\]
+
+\subsection*{Maxwell}
+
+\[
+\boxed{
+\nabla\cdot\vect{D}
+=
+\rho
+}
+\]
+
+\[
+\boxed{
+\nabla\cdot\vect{B}
+=
+0
+}
+\]
+
+\[
+\boxed{
+\nabla\times\vect{E}
+=
+-\frac{\partial\vect{B}}{\partial t}
+}
+\]
+
+\[
+\boxed{
+\nabla\times\vect{H}
+=
+\vect{J}
++
+\frac{\partial\vect{D}}{\partial t}
+}
+\]
+
+\subsection*{Waves}
+
+\[
+\boxed{
+v
+=
+\frac{1}{\sqrt{\mu\epsilon}}
+}
+\]
+
+\[
+\boxed{
+c
+=
+\frac{1}{\sqrt{\mu_0\epsilon_0}}
+}
+\]
+
+\[
+\boxed{
+v=f\lambda
+}
+\]
+
+\[
+\boxed{
+v=\frac{\omega}{k}
+}
+\]
+
+\[
+\boxed{
+k=\frac{2\pi}{\lambda}
+}
+\]
+
+\[
+\boxed{
+\omega=2\pi f
+}
+\]
+
+\[
+\boxed{
+\eta
+=
+\sqrt{\frac{\mu}{\epsilon}}
+}
+\]
+
+\[
+\boxed{
+\vect{S}
+=
+\vect{E}\times\vect{H}
+}
+\]
+
+\subsection*{Complex Numbers and Phasors}
+
+\[
+\boxed{
+j=\sqrt{-1}
+}
+\]
+
+\[
+\boxed{
+e^{j\theta}
+=
+\cos\theta+j\sin\theta
+}
+\]
+
+\[
+\boxed{
+\frac{\partial}{\partial t}
+\longrightarrow
+j\omega
+}
+\]
+
+\subsection*{Fourier and SDR}
+
+\[
+\boxed{
+X(f)
+=
+\int_{-\infty}^{\infty}
+x(t)e^{-j2\pi ft}\,dt
+}
+\]
+
+\[
+\boxed{
+X[k]
+=
+\sum_{n=0}^{N-1}
+x[n]e^{-j2\pi kn/N}
+}
+\]
+
+\[
+\boxed{
+f_s>2f_{\max}
+}
+\]
+
+\[
+\boxed{
+Y(f)
+=
+X(f)H(f)
+}
+\]
+
+\subsection*{Vector Integral Theorems}
+
+\[
+\boxed{
+\iiint_V
+\nabla\cdot\vect{A}\,dv
+=
+\oiint_S
+\vect{A}\cdot d\vect{S}
+}
+\]
+
+\[
+\boxed{
+\iint_S
+(\nabla\times\vect{A})
+\cdot d\vect{S}
+=
+\oint_C
+\vect{A}\cdot d\vect{l}
+}
+\]
+
+
+% ============================================================
+% 52. SYMBOL REFERENCE
+% ============================================================
+
+\section{Symbol Reference}
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+Symbol & Meaning & Typical Unit \\
+\midrule
+$\vect{E}$ & Electric field & V/m \\
+$\vect{D}$ & Electric flux density & C/m$^2$ \\
+$\vect{B}$ & Magnetic flux density & T \\
+$\vect{H}$ & Magnetic field intensity & A/m \\
+$\vect{J}$ & Current density & A/m$^2$ \\
+$V$ & Electric potential & V \\
+$Q$ & Electric charge & C \\
+$\rho$ & Volume charge density & C/m$^3$ \\
+$\rho_s$ & Surface charge density & C/m$^2$ \\
+$\rho_l$ & Line charge density & C/m \\
+$\epsilon$ & Permittivity & F/m \\
+$\mu$ & Permeability & H/m \\
+$\sigma$ & Conductivity & S/m \\
+$\eta$ & Intrinsic impedance & $\Omega$ \\
+$f$ & Frequency & Hz \\
+$T$ & Period & s \\
+$\omega$ & Angular frequency & rad/s \\
+$\lambda$ & Wavelength & m \\
+$k$ & Wavenumber & rad/m \\
+$c$ & Speed of light & m/s \\
+$\vect{S}$ & Poynting vector & W/m$^2$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+% ============================================================
+% 53. WHAT TO MEMORIZE FIRST
+% ============================================================
+
+\section{What to Memorize First}
+
+Do not try to memorize everything simultaneously.
+
+Start with these.
+
+\subsection*{1. Vector Calculus}
+
+Know what these mean:
+
+\[
+\boxed{
+\nabla V
+}
+\]
+
+\[
+\boxed{
+\nabla\cdot\vect{A}
+}
+\]
+
+\[
+\boxed{
+\nabla\times\vect{A}
+}
+\]
+
+\[
+\boxed{
+\nabla^2V
+}
+\]
+
+Remember:
+
+\[
+\boxed{
+\text{gradient}
+\rightarrow
+\text{scalar to vector}
+}
+\]
+
+\[
+\boxed{
+\text{divergence}
+\rightarrow
+\text{vector to scalar}
+}
+\]
+
+\[
+\boxed{
+\text{curl}
+\rightarrow
+\text{vector to vector}
+}
+\]
+
+\subsection*{2. Electric Field and Voltage}
+
+\[
+\boxed{
+\vect{E}
+=
+-\nabla V
+}
+\]
+
+\subsection*{3. Constitutive Relations}
+
+\[
+\boxed{
+\vect{D}=\epsilon\vect{E}
+}
+\]
+
+\[
+\boxed{
+\vect{B}=\mu\vect{H}
+}
+\]
+
+\[
+\boxed{
+\vect{J}=\sigma\vect{E}
+}
+\]
+
+\subsection*{4. Maxwell's Equations}
+
+Memorize all four.
+
+\subsection*{5. Wave Relationships}
+
+\[
+\boxed{
+v=f\lambda
+}
+\]
+
+\[
+\boxed{
+\omega=2\pi f
+}
+\]
+
+\[
+\boxed{
+k=\frac{2\pi}{\lambda}
+}
+\]
+
+\[
+\boxed{
+v=\frac{\omega}{k}
+}
+\]
+
+\subsection*{6. Fourier Analysis}
+
+Understand the idea that
+
+\[
+\boxed{
+\text{time domain}
+\longleftrightarrow
+\text{frequency domain}
+}
+\]
+
+and know the DFT/FFT relationship.
+
+
+% ============================================================
+% 54. MOST IMPORTANT MENTAL MAP
+% ============================================================
+
+\section{The Most Important Mental Map}
+
+Try to understand electromagnetics as one connected system.
+
+\subsection*{Step 1: Charge}
+
+Charge density creates electric flux:
+
+\[
+\boxed{
+\nabla\cdot\vect{D}
+=
+\rho
+}
+\]
+
+\subsection*{Step 2: Electric Field}
+
+Electric field is related to voltage:
+
+\[
+\boxed{
+\vect{E}
+=
+-\nabla V
+}
+\]
+
+\subsection*{Step 3: Material}
+
+The material determines how $\vect{D}$ relates to $\vect{E}$:
+
+\[
+\boxed{
+\vect{D}
+=
+\epsilon\vect{E}
+}
+\]
+
+\subsection*{Step 4: Current}
+
+Conducting materials allow current:
+
+\[
+\boxed{
+\vect{J}
+=
+\sigma\vect{E}
+}
+\]
+
+\subsection*{Step 5: Magnetic Field}
+
+Magnetic fields are related to currents and changing electric fields:
+
+\[
+\boxed{
+\nabla\times\vect{H}
+=
+\vect{J}
++
+\frac{\partial\vect{D}}{\partial t}
+}
+\]
+
+\subsection*{Step 6: Changing Magnetic Fields}
+
+Changing magnetic fields create electric fields:
+
+\[
+\boxed{
+\nabla\times\vect{E}
+=
+-\frac{\partial\vect{B}}{\partial t}
+}
+\]
+
+\subsection*{Step 7: Waves}
+
+The electric and magnetic fields can therefore continually generate one another.
+
+That produces electromagnetic waves.
+
+\[
+\boxed{
+\text{changing }\vect{E}
+\rightarrow
+\text{changing }\vect{H}
+\rightarrow
+\text{changing }\vect{E}
+\rightarrow
+\cdots
+}
+\]
+
+
+% ============================================================
+% 55. MAXWELL AS A MENTAL MAP
+% ============================================================
+
+\section{Maxwell's Equations as a Mental Map}
+
+Instead of memorizing Maxwell's equations as four unrelated equations, associate each with a question.
+
+\subsection*{Question 1: What creates electric flux?}
+
+\[
+\boxed{
+\nabla\cdot\vect{D}
+=
+\rho
+}
+\]
+
+Answer:
+
+\[
+\text{electric charge}.
+\]
+
+\subsection*{Question 2: What creates magnetic flux divergence?}
+
+\[
+\boxed{
+\nabla\cdot\vect{B}
+=
+0
+}
+\]
+
+Answer:
+
+\[
+\text{there are no isolated magnetic monopoles}.
+\]
+
+\subsection*{Question 3: What creates circulating electric fields?}
+
+\[
+\boxed{
+\nabla\times\vect{E}
+=
+-\frac{\partial\vect{B}}{\partial t}
+}
+\]
+
+Answer:
+
+\[
+\text{changing magnetic fields}.
+\]
+
+\subsection*{Question 4: What creates circulating magnetic fields?}
+
+\[
+\boxed{
+\nabla\times\vect{H}
+=
+\vect{J}
++
+\frac{\partial\vect{D}}{\partial t}
+}
+\]
+
+Answer:
+
+\[
+\text{electric current and changing electric fields}.
+\]
+
+
+% ============================================================
+% 56. THREE QUESTIONS
+% ============================================================
+
+\section{Three Questions to Ask for Every Equation}
+
+When looking at a new electromagnetics equation, ask:
+
+\subsection*{1. What goes into the equation?}
+
+For example,
+
+\[
+\nabla\cdot\vect{D}
+\]
+
+takes a vector field and produces a scalar.
+
+\subsection*{2. What comes out?}
+
+For example,
+
+\[
+\nabla\cdot\vect{D}=\rho
+\]
+
+produces charge density.
+
+\subsection*{3. What does it physically mean?}
+
+In this case:
+
+\[
+\boxed{
+\text{electric charge is a source of electric flux}
+}
+\]
+
+This method is often more useful than trying to memorize symbols without understanding them.
+
+
+% ============================================================
+% 57. FINAL STUDY STRATEGY
+% ============================================================
+
+\section{Final Study Strategy}
+
+A useful order for learning the material is:
+
+\begin{enumerate}
+    \item Scalars vs vectors
+    \item Unit vectors
+    \item Vector magnitude
+    \item Dot product
+    \item Cross product
+    \item Partial derivatives
+    \item Gradient
+    \item Divergence
+    \item Curl
+    \item Laplacian
+    \item Line/surface/volume integrals
+    \item Flux
+    \item Charge density
+    \item Electric potential
+    \item Electric field
+    \item Permittivity
+    \item $\vect{D}$
+    \item $\vect{B}$ and $\vect{H}$
+    \item Current density
+    \item Maxwell's equations
+    \item Poisson and Laplace equations
+    \item Boundary conditions
+    \item Waves
+    \item Phasors
+    \item Fourier transforms
+    \item DFT/FFT
+    \item Sampling
+    \item Convolution
+\end{enumerate}
+
+For each equation, learn three things:
+
+\[
+\boxed{
+\text{What does it say?}
+}
+\]
+
+\[
+\boxed{
+\text{What does every symbol mean?}
+}
+\]
+
+\[
+\boxed{
+\text{What does it mean physically?}
+}
+\]
+
+Do not worry about memorizing every derivation immediately.
+
+The goal is first to understand the structure.
+
+
+% ============================================================
+% 58. QUICK REFERENCE
+% ============================================================
+
+\section{Quick Reference}
+
+\subsection*{Vector Operations}
+
+\[
+\boxed{
+|\vect{A}|
+=
+\sqrt{A_x^2+A_y^2+A_z^2}
+}
+\]
+
+\[
+\boxed{
+\vect{A}\cdot\vect{B}
+=
+|\vect{A}||\vect{B}|\cos\theta
+}
+\]
+
+\[
+\boxed{
+\vect{A}\times\vect{B}
+=
+|\vect{A}||\vect{B}|\sin\theta\,\hat{\vect{n}}
+}
+\]
+
+\[
+\boxed{
+\nabla V
+=
+\text{gradient}
+}
+\]
+
+\[
+\boxed{
+\nabla\cdot\vect{A}
+=
+\text{divergence}
+}
+\]
+
+\[
+\boxed{
+\nabla\times\vect{A}
+=
+\text{curl}
+}
+\]
+
+\[
+\boxed{
+\nabla^2V
+=
+\text{Laplacian}
+}
+\]
+
+\subsection*{Electrostatics}
+
+\[
+\boxed{
+\vect{E}
+=
+-\nabla V
+}
+\]
+
+\[
+\boxed{
+\vect{D}
+=
+\epsilon\vect{E}
+}
+\]
+
+\[
+\boxed{
+\nabla\cdot\vect{D}
+=
+\rho
+}
+\]
+
+\[
+\boxed{
+\nabla^2V
+=
+-\frac{\rho}{\epsilon}
+}
+\]
+
+\[
+\boxed{
+\nabla^2V=0
+\quad
+\text{if }
+\rho=0
+}
+\]
+
+\subsection*{Magnetics}
+
+\[
+\boxed{
+\vect{B}
+=
+\mu\vect{H}
+}
+\]
+
+\[
+\boxed{
+\nabla\cdot\vect{B}
+=
+0
+}
+\]
+
+\subsection*{Maxwell}
+
+\[
+\boxed{
+\nabla\cdot\vect{D}
+=
+\rho
+}
+\]
+
+\[
+\boxed{
+\nabla\cdot\vect{B}
+=
+0
+}
+\]
+
+\[
+\boxed{
+\nabla\times\vect{E}
+=
+-\frac{\partial\vect{B}}{\partial t}
+}
+\]
+
+\[
+\boxed{
+\nabla\times\vect{H}
+=
+\vect{J}
++
+\frac{\partial\vect{D}}{\partial t}
+}
+\]
+
+\subsection*{Waves}
+
+\[
+\boxed{
+v
+=
+\frac{1}{\sqrt{\mu\epsilon}}
+}
+\]
+
+\[
+\boxed{
+v=f\lambda
+}
+\]
+
+\[
+\boxed{
+v=\frac{\omega}{k}
+}
+\]
+
+\[
+\boxed{
+\omega=2\pi f
+}
+\]
+
+\[
+\boxed{
+k=\frac{2\pi}{\lambda}
+}
+\]
+
+\[
+\boxed{
+\eta
+=
+\sqrt{\frac{\mu}{\epsilon}}
+}
+\]
+
+\[
+\boxed{
+\vect{S}
+=
+\vect{E}\times\vect{H}
+}
+\]
+
+\subsection*{Fourier / SDR}
+
+\[
+\boxed{
+X(f)
+=
+\int_{-\infty}^{\infty}
+x(t)e^{-j2\pi ft}\,dt
+}
+\]
+
+\[
+\boxed{
+X[k]
+=
+\sum_{n=0}^{N-1}
+x[n]e^{-j2\pi kn/N}
+}
+\]
+
+\[
+\boxed{
+f_s>2f_{\max}
+}
+\]
+
+\[
+\boxed{
+Y(f)
+=
+X(f)H(f)
+}
+\]
+
+
+% ============================================================
+% 59. CORE MENTAL MODEL
+% ============================================================
+
+\section{Core Mental Model}
+
+If everything above feels overwhelming, remember this simplified model:
+
+\[
+\boxed{
+\text{Charge}
+\rightarrow
+\text{Electric Field}
+}
+\]
+
+\[
+\boxed{
+\text{Current}
+\rightarrow
+\text{Magnetic Field}
+}
+\]
+
+\[
+\boxed{
+\text{Changing Magnetic Field}
+\rightarrow
+\text{Electric Field}
+}
+\]
+
+\[
+\boxed{
+\text{Changing Electric Field}
+\rightarrow
+\text{Magnetic Field}
+}
+\]
+
+Therefore:
+
+\[
+\boxed{
+\text{Electric and magnetic fields can propagate together as waves.}
+}
+\]
+
+For a plane wave:
+
+\[
+\boxed{
+\vect{E}
+\perp
+\vect{H}
+\perp
+\text{direction of propagation}
+}
+\]
+
+And the propagation velocity is
+
+\[
+\boxed{
+v
+=
+\frac{1}{\sqrt{\mu\epsilon}}
+}
+\]
+
+For free space,
+
+\[
+\boxed{
+c
+=
+\frac{1}{\sqrt{\mu_0\epsilon_0}}
+}
+\]
+
+Finally, for SDR and signal processing:
+
+\[
+\boxed{
+\text{RF signal}
+\rightarrow
+\text{sampling}
+\rightarrow
+\text{IQ data}
+\rightarrow
+\text{Fourier/filtering}
+\rightarrow
+\text{information}
+}
+\]
+
+That is the bridge between the electromagnetics you're learning and the RF/SDR work you're already doing.
+
+\end{document}
+```
